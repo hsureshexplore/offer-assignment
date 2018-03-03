@@ -1,7 +1,7 @@
 package com.worldpay.exercise.scheduler;
 
-import com.worldpay.exercise.OfferService;
-import com.worldpay.exercise.offer.Offer;
+import com.worldpay.exercise.app.OfferService;
+import com.worldpay.exercise.domain.Offer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

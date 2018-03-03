@@ -1,5 +1,6 @@
 package com.worldpay.exercise;
 
+import com.worldpay.exercise.app.OfferServiceImpl;
 import com.worldpay.exercise.datasource.DBManager;
 import com.worldpay.exercise.datasource.DBManagerImpl;
 import com.worldpay.exercise.response.JsonUtil;
@@ -7,6 +8,10 @@ import com.worldpay.exercise.scheduler.OfferScheduler;
 
 import static spark.Spark.*;
 
+/***
+ * Entry point for the application.
+ * In real application all the bean wiring and lifecycle operations will be done in a DI framework like Spring, Guice, Play framework
+ */
 public class OfferServer {
 
     private final OfferController offerController;

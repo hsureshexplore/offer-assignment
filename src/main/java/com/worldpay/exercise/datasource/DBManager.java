@@ -1,6 +1,6 @@
 package com.worldpay.exercise.datasource;
 
-import com.worldpay.exercise.offer.Offer;
+import com.worldpay.exercise.domain.Offer;
 
 import java.util.Collection;
 

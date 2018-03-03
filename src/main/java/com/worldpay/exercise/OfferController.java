@@ -1,11 +1,15 @@
 package com.worldpay.exercise;
 
-import com.worldpay.exercise.offer.Offer;
+import com.worldpay.exercise.app.OfferService;
+import com.worldpay.exercise.domain.Offer;
 import spark.Request;
 
 import java.math.BigDecimal;
 import java.util.Collection;
 
+/***
+ * Controller class that parses the requests and delegates calls to OfferService
+ */
 public class OfferController {
     private OfferService offerService;
 
@@ -18,6 +22,7 @@ public class OfferController {
         BigDecimal price = new BigDecimal(request.queryParams("price"));
         String currency = request.queryParams("currency");
         int validityInSeconds = Integer.parseInt(request.queryParams("validityInSeconds"));
+
         return offerService.createOffer(description, price, currency, validityInSeconds);
     }
 

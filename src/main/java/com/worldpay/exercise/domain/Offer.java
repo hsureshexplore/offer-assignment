@@ -1,4 +1,4 @@
-package com.worldpay.exercise.offer;
+package com.worldpay.exercise.domain;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -21,24 +21,27 @@ public class Offer implements Serializable{
     private LocalDateTime createdAt;
     private boolean valid;
 
-    public Offer(final String description, final BigDecimal price, final String currency, final int validityInSeconds) {
+    public Offer(final String id, final String description, final BigDecimal price, final String currency, final int validityInSeconds, final LocalDateTime createdAt, final boolean valid) {
         checkArgument(description != null, "Description is Mandatory");
         checkArgument(price != null && price.signum() > 0, "Price is Mandatory");
         checkArgument(currency != null, "Currency is Mandatory" );
         checkArgument(validityInSeconds > 0, "Validity period should be greater than 0");
-        this.id = UUID.randomUUID().toString();
+
+        this.id = id;
         this.description = description;
         this.price = price;
         this.currency = currency;
         this.validityInSeconds = validityInSeconds;
-
-        this.createdAt = LocalDateTime.now();
-        this.valid = true;
+        this.createdAt = createdAt;
+        this.valid = valid;
     }
 
 
     public static Offer create(final String description, final BigDecimal price, final String currency, final int validityInSeconds) {
-        return new Offer(description, price, currency, validityInSeconds);
+        String id = UUID.randomUUID().toString();
+        LocalDateTime createdAt =  LocalDateTime.now();
+        boolean valid = true;
+        return new Offer(id, description, price, currency, validityInSeconds, createdAt, valid);
     }
 
     public String getId() {
@@ -57,7 +60,7 @@ public class Offer implements Serializable{
         return currency;
     }
 
-    public long getValidityInSeconds() {
+    public int getValidityInSeconds() {
         return validityInSeconds;
     }
 

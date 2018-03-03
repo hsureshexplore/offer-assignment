@@ -1,7 +1,8 @@
 package com.worldpay.exercise;
 
+import com.worldpay.exercise.app.OfferServiceImpl;
 import com.worldpay.exercise.datasource.DBManagerImpl;
-import com.worldpay.exercise.offer.Offer;
+import com.worldpay.exercise.domain.Offer;
 import io.restassured.response.Response;
 import org.hamcrest.Matchers;
 import org.junit.AfterClass;
@@ -17,6 +18,13 @@ import static io.restassured.RestAssured.given;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.*;
 
+/***
+ * Integration test for testing the routes
+ * Add offer
+ * Get offers
+ * Get offer by Id
+ * Cancel offer
+ */
 public class OfferServerTest {
     private static String url;
     private static String path;
@@ -25,7 +33,8 @@ public class OfferServerTest {
     @BeforeClass
     public static void setUp() {
         //Create Offer server and init routes
-        OfferServer offerServer = new OfferServer(new OfferController(new OfferServiceImpl(new DBManagerImpl())));
+        DBManagerImpl dbManager = new DBManagerImpl("./" + OfferServerTest.class.getSimpleName() + "offer.db");
+        OfferServer offerServer = new OfferServer(new OfferController(new OfferServiceImpl(dbManager)));
         offerServer.initRoutes();
         url = "http://localhost:4567";
         path = "/offers";
@@ -65,7 +74,7 @@ public class OfferServerTest {
 
     @Test
     public void testAddOfferReturnsOfferResponse() {
-        String description = "Black friday sale. 2 cup cakes for the price of 1. Grab them before they are gone";
+        String description = "2 cup cakes for the price of 1 !!!";
         BigDecimal price = BigDecimal.TEN;
         String currency = "GBP";
         int validityInSeconds = 10;

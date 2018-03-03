@@ -1,4 +1,4 @@
-package com.worldpay.exercise.offer;
+package com.worldpay.exercise.domain;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -38,7 +38,7 @@ public class OfferTest {
     }
 
     @Test
-    public void testOfferExpiryReturnTrueAfterValidityPeriod() throws InterruptedException {
+    public void testShouldExpireReturnTrueAfterValidityPeriod() throws InterruptedException {
         //setup
         Offer createdOffer = Offer.create("offer description", BigDecimal.TEN, "GBP", 3);
 
@@ -50,22 +50,9 @@ public class OfferTest {
     }
 
     @Test
-    public void testOfferExpiryReturnFalseBeforeValidityPeriod() throws InterruptedException {
+    public void testShouldExpireExpiryReturnFalseBeforeValidityPeriod() throws InterruptedException {
         //setup
         Offer createdOffer = Offer.create("offer description", BigDecimal.TEN, "GBP", Integer.MAX_VALUE);
-
-        //act
-        Thread.sleep(1000);
-
-        //assert
-        assertFalse(createdOffer.shouldExpire());
-    }
-
-
-    @Test
-    public void testOfferExpiryReturnFalseBeforeValidityPeriod2() throws InterruptedException {
-        //setup
-        Offer createdOffer = Offer.create("offer description", BigDecimal.TEN, "GBP", 1000000);
 
         //act
         Thread.sleep(1000);

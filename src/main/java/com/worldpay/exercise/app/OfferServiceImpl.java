@@ -1,7 +1,7 @@
-package com.worldpay.exercise;
+package com.worldpay.exercise.app;
 
 import com.worldpay.exercise.datasource.DBManager;
-import com.worldpay.exercise.offer.Offer;
+import com.worldpay.exercise.domain.Offer;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;

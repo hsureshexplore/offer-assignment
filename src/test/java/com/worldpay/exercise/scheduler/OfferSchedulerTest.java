@@ -1,10 +1,10 @@
 package com.worldpay.exercise.scheduler;
 
-import com.worldpay.exercise.OfferService;
-import com.worldpay.exercise.OfferServiceImpl;
+import com.worldpay.exercise.app.OfferService;
+import com.worldpay.exercise.app.OfferServiceImpl;
 import com.worldpay.exercise.datasource.DBManager;
 import com.worldpay.exercise.datasource.DBManagerImpl;
-import com.worldpay.exercise.offer.Offer;
+import com.worldpay.exercise.domain.Offer;
 import org.junit.Before;
 import org.junit.Test;
 

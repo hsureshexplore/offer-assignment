@@ -1,7 +1,7 @@
-package com.worldpay.exercise;
+package com.worldpay.exercise.app;
 
 import com.worldpay.exercise.datasource.DBManager;
-import com.worldpay.exercise.offer.Offer;
+import com.worldpay.exercise.domain.Offer;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -39,5 +39,25 @@ public class OfferServiceTest {
         assertNotNull(offer);
         verify(dbManager).addOffer(offer);
         assertNotNull(offer.getId());
+    }
+
+    @Test
+    public void testGetOffersCallsDbManagerGetOffers(){
+        offerService.getOffers();
+        verify(dbManager).getOffers();
+    }
+
+    @Test
+    public void testGetOfferCallsDbManagerGetOffer(){
+        String id = "randomid";
+        offerService.getOffer(id);
+        verify(dbManager).getOffer(id);
+    }
+
+    @Test
+    public void testCancelOfferCallsDbManagerCancelOffer(){
+        String id = "randomid";
+        offerService.cancelOffer(id);
+        verify(dbManager).cancelOffer(id);
     }
 }
