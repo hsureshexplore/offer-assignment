@@ -23,7 +23,7 @@ public class OfferServer {
         new OfferServer(new OfferController(offerService)).initRoutes();
 
         //Scheduler instantiated
-        new OfferScheduler(dbManager);
+        new OfferScheduler(offerService);
     }
 
     public void initRoutes() {

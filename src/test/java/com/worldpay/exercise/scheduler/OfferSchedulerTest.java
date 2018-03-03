@@ -1,11 +1,12 @@
 package com.worldpay.exercise.scheduler;
 
+import com.worldpay.exercise.OfferService;
+import com.worldpay.exercise.OfferServiceImpl;
 import com.worldpay.exercise.datasource.DBManager;
 import com.worldpay.exercise.datasource.DBManagerImpl;
 import com.worldpay.exercise.offer.Offer;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.MockitoAnnotations;
 
 import java.math.BigDecimal;
 import java.util.concurrent.ConcurrentHashMap;
@@ -20,9 +21,10 @@ public class OfferSchedulerTest {
 
     @Before
     public void before() {
-        MockitoAnnotations.initMocks(this);
+
         dbManager = new DBManagerImpl(new ConcurrentHashMap<>());
-        new OfferScheduler(dbManager);
+        OfferService offerService = new OfferServiceImpl(dbManager);
+        new OfferScheduler(offerService);
     }
 
     @Test
