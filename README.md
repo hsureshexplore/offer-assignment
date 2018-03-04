@@ -1,37 +1,37 @@
 # offer-assignment
 Offer service
 
-# How to run tests
+### How to run tests
 
 Tests can be run by calling `mvn clean install`
 
-# How to run application
+### How to run application
 
 OfferServer is the entry point for the application. The application can be run by running main method in OfferServer.
  
 `mvn exec:java -Dexec.mainClass="com.worldpay.exercise.OfferServer"`
 
-# Create offer
+### Create offer
 
 curl -X POST "http://localhost:4567/offers?description=aaaa&price=10.0&currency=GBP&validityInSeconds=10"
 
-# Get offers
+### Get offers
 
 curl http://localhost:4567/offers
 
-# Get offer by Id
+### Get offer by Id
 
 curl localhost:4567/offers/<id>
 
 Eg: curl localhost:4567/offers/56c183de-2bf5-474a-9ff7-fc2d12f103b9
 
-# Cancel offer
+### Cancel offer
 
 curl -X POST localhost:4567/offers/cancel/<id>
 
 Eg: curl -X POST "localhost:4567/offers/cancel/7ba3772e-2ace-4502-8112-dd2380f56900"
 
-# Decisions on design
+### Decisions on design
 
 Spark:
     Spark is micro web framework for Java/Scala and is a quick tool for building web services.
