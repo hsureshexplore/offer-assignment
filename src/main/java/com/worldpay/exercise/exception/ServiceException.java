@@ -1,18 +1,18 @@
 package com.worldpay.exercise.exception;
 
 public class ServiceException extends RuntimeException {
-    private final int httpErrorCode;
+    private final String errorCode;
 
     public ServiceException(String message) {
-        this(message, 500);
+        this(message, "INTERNAL_SERVER_ERROR");
     }
 
-    public ServiceException(String message, int httpErrorCode) {
+    public ServiceException(String message, String errorCode) {
         super(message);
-        this.httpErrorCode = httpErrorCode;
+        this.errorCode = errorCode;
     }
 
-    public int getHttpErrorCode() {
-        return httpErrorCode;
+    public String getErrorCode() {
+        return errorCode;
     }
 }

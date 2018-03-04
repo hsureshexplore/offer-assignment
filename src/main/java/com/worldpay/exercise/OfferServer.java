@@ -15,6 +15,9 @@ import static spark.Spark.*;
  */
 public class OfferServer {
 
+    public static final int INTERNAL_SERVER_ERROR = 500;
+    public static final int BAD_REQUEST = 400;
+    public static final int RESOURCE_NOT_FOUND = 404;
     private final OfferController offerController;
     public static final String OFFER_DB = "./offer.db";
 
@@ -58,12 +61,12 @@ public class OfferServer {
 
         exception(Exception.class, (e, req, res) -> {
 
-            int statusCode = 500;
+            int statusCode = INTERNAL_SERVER_ERROR;
             if (e instanceof IllegalArgumentException) {
-                statusCode = 400;
+                statusCode = BAD_REQUEST;
             }
             else if (e instanceof ServiceException) {
-                statusCode = 404;
+                statusCode = RESOURCE_NOT_FOUND;
             }
             res.status(statusCode);
             res.body(JsonUtil.toJson(new ResponseError(e)));

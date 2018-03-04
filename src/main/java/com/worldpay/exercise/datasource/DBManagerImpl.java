@@ -55,7 +55,7 @@ public class DBManagerImpl implements DBManager {
     @Override
     public Offer cancelOffer(String id) {
         Optional<Offer> offerOpt = getOffer(id);
-        Offer offer = offerOpt.orElseThrow(() -> new ServiceException("Unable to cancel offer. No offer found for id [" + id + "]", 404));
+        Offer offer = offerOpt.orElseThrow(() -> new ServiceException("Unable to cancel offer. No offer found for id [" + id + "]"));
 
         LOGGER.debug("Cancelling offer in DBManager {}", offer.getId());
         offer.cancel();
