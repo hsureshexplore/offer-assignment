@@ -35,8 +35,6 @@ public class OfferServiceImpl implements OfferService {
 
     @Override
     public Offer cancelOffer(String id) {
-        Optional<Offer> offer = dbManager.getOffer(id);
-        offer.orElseThrow(() -> new ServiceException("Unable to cancel offer. No offer found for id [" + id + "]", 404));
         return dbManager.cancelOffer(id);
     }
 }

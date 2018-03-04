@@ -1,6 +1,7 @@
 package com.worldpay.exercise.datasource;
 
 import com.worldpay.exercise.domain.Offer;
+import com.worldpay.exercise.exception.ServiceException;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -45,5 +46,12 @@ public class DBManagerTest {
         dbManager.addOffer(offer3);
         dbManager.cancelOffer(offer3.getId());
         assertFalse(dbManager.getOffer(offer3.getId()).get().isValid());
+    }
+
+
+    @Test(expected = ServiceException.class)
+    public void testCancelOfferThrowsExceptionWhenOfferIsNotFound(){
+        String id = "randomid";
+        dbManager.cancelOffer(id);
     }
 }

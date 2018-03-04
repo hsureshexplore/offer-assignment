@@ -66,11 +66,4 @@ public class OfferServiceTest {
         offerService.cancelOffer(id);
         verify(dbManager).cancelOffer(id);
     }
-
-    @Test(expected = ServiceException.class)
-    public void testCancelOfferThrowsExceptionWhenOfferIsNotFound(){
-        String id = "randomid";
-        when(dbManager.getOffer(id)).thenReturn(Optional.empty());
-        offerService.cancelOffer(id);
-    }
 }

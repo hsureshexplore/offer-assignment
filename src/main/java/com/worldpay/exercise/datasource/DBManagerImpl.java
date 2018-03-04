@@ -2,6 +2,7 @@ package com.worldpay.exercise.datasource;
 
 import com.google.common.annotations.VisibleForTesting;
 import com.worldpay.exercise.domain.Offer;
+import com.worldpay.exercise.exception.ServiceException;
 import org.mapdb.DBMaker;
 import org.mapdb.Serializer;
 import org.slf4j.Logger;
@@ -53,7 +54,9 @@ public class DBManagerImpl implements DBManager {
 
     @Override
     public Offer cancelOffer(String id) {
-        Offer offer = map.get(id);
+        Optional<Offer> offerOpt = getOffer(id);
+        Offer offer = offerOpt.orElseThrow(() -> new ServiceException("Unable to cancel offer. No offer found for id [" + id + "]", 404));
+
         LOGGER.debug("Cancelling offer in DBManager {}", offer.getId());
         offer.cancel();
         map.put(offer.getId(), offer);
