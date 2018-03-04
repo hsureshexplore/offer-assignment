@@ -18,12 +18,18 @@ public class OfferController {
     }
 
     public Offer createOffer(Request request) {
+        Offer offer = parseOffer(request);
+        offerService.createOffer(offer);
+        return offer;
+    }
+
+    private Offer parseOffer(Request request) {
         String description = request.queryParams("description");
         BigDecimal price = new BigDecimal(request.queryParams("price"));
         String currency = request.queryParams("currency");
         int validityInSeconds = Integer.parseInt(request.queryParams("validityInSeconds"));
 
-        return offerService.createOffer(description, price, currency, validityInSeconds);
+        return Offer.create(description, price, currency, validityInSeconds);
     }
 
     public Collection<Offer> getOffers(Request req) {

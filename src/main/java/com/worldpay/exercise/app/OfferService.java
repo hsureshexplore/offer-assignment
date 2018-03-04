@@ -2,12 +2,11 @@ package com.worldpay.exercise.app;
 
 import com.worldpay.exercise.domain.Offer;
 
-import java.math.BigDecimal;
 import java.util.Collection;
 
 
 public interface OfferService {
-    Offer createOffer(final String description, final BigDecimal price, final String currency, int validityInSeconds);
+    void createOffer(Offer offer);
 
     Collection<Offer> getOffers();
 

@@ -4,7 +4,6 @@ import com.worldpay.exercise.datasource.DBManager;
 import com.worldpay.exercise.domain.Offer;
 import com.worldpay.exercise.exception.ServiceException;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Optional;
@@ -18,10 +17,8 @@ public class OfferServiceImpl implements OfferService {
     }
 
     @Override
-    public Offer createOffer(final String description, final BigDecimal price, final String currency, final int validityInSeconds) {
-        Offer createdOffer = Offer.create(description, price, currency, validityInSeconds);
-        dbManager.addOffer(createdOffer);
-        return createdOffer;
+    public void createOffer(Offer offer) {
+        dbManager.addOffer(offer);
     }
 
     @Override

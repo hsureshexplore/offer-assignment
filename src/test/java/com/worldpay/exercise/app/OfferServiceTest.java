@@ -36,14 +36,12 @@ public class OfferServiceTest {
         BigDecimal price = new BigDecimal(2.0);
         String currency = "GBP";
         int validityInSeconds = 10;
-
+        offer = Offer.create("offer", BigDecimal.TEN, "USD", 4);
         //act
-        Offer offer = offerService.createOffer(description, price, currency, validityInSeconds);
+        offerService.createOffer(offer);
 
         //assert
-        assertNotNull(offer);
         verify(dbManager).addOffer(offer);
-        assertNotNull(offer.getId());
     }
 
     @Test
