@@ -4,6 +4,7 @@ import com.worldpay.exercise.app.OfferServiceImpl;
 import com.worldpay.exercise.datasource.DBManager;
 import com.worldpay.exercise.datasource.DBManagerImpl;
 import com.worldpay.exercise.response.JsonUtil;
+import com.worldpay.exercise.response.ResponseError;
 import com.worldpay.exercise.scheduler.OfferScheduler;
 
 import static spark.Spark.*;
@@ -42,5 +43,9 @@ public class OfferServer {
         get("/offers/:id", (req, res) -> offerController.getOffer(req), JsonUtil::toJson);
         post("/offers/cancel/:id", (req, res) -> offerController.cancelOffer(req), JsonUtil::toJson);
 
+        exception(IllegalArgumentException.class, (e, req, res) -> {
+            res.status(400);
+            res.body(JsonUtil.toJson(new ResponseError(e)));
+        });
     }
 }

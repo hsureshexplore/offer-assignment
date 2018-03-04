@@ -90,6 +90,24 @@ public class OfferServerTest {
     }
 
     @Test
+    public void testExceptionHandlingOnAddOfferWithInvalidInput(){
+        String description = "2 cup cakes for the price of 1 !!!";
+        BigDecimal price = BigDecimal.TEN;
+        String currency = "GBP";
+        int validityInSeconds = 0;
+
+
+        given().queryParam("description", description).
+                queryParam("price", price).
+                queryParam("currency", currency).
+                queryParam("validityInSeconds", validityInSeconds).
+                post(url + "/offers").
+                then().
+                statusCode(is(400)).
+                body("message", Matchers.startsWith("Validity period should be greater than 0"));
+
+    }
+    @Test
     public void testGetOffersReturnsListOfOffers() {
         Response response = given().
                 when().
