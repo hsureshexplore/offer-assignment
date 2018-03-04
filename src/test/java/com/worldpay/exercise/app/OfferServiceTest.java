@@ -11,7 +11,6 @@ import org.mockito.MockitoAnnotations;
 import java.math.BigDecimal;
 import java.util.Optional;
 
-import static org.junit.Assert.assertNotNull;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -31,12 +30,6 @@ public class OfferServiceTest {
 
     @Test
     public void testCreateOfferReturnsIdOnSuccess(){
-        //setup
-        String description = "Black friday sale. 2 cup cakes for the price of 1. Grab them before they are gone";
-        BigDecimal price = new BigDecimal(2.0);
-        String currency = "GBP";
-        int validityInSeconds = 10;
-        offer = Offer.create("offer", BigDecimal.TEN, "USD", 4);
         //act
         offerService.createOffer(offer);
 
