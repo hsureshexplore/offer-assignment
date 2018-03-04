@@ -18,14 +18,9 @@ import java.util.Optional;
 public class DBManagerImpl implements DBManager {
 
     public static final String OFFER = "offer";
-    public static final String OFFER_DB = "./offer.db";
     private Map<String, Offer> map;
     private static final Logger LOGGER = LoggerFactory.getLogger(DBManagerImpl.class);
 
-
-    public DBManagerImpl() {
-        this(OFFER_DB);
-    }
     @VisibleForTesting
     public DBManagerImpl(String dbName){
         this.map = DBMaker.fileDB(dbName)

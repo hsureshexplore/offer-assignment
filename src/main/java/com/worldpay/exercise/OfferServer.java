@@ -16,22 +16,24 @@ import static spark.Spark.*;
 public class OfferServer {
 
     private final OfferController offerController;
+    public static final String OFFER_DB = "./offer.db";
 
     public OfferServer(final OfferController offerController) {
         this.offerController = offerController;
     }
 
     public static void main(String[] args) {
-        createOfferServer();
+        createServer(OFFER_DB);
     }
 
     /**
      * In real application all the bean wiring and lifecycle operations will be done in a DI framework like Spring,
      * Guice, Play framework
      * @return an instance of offer server
+     * @param offerDb
      */
-    public static OfferServer createOfferServer() {
-        DBManager dbManager = new DBManagerImpl();
+    public static OfferServer createServer(String offerDb) {
+        DBManager dbManager = new DBManagerImpl(offerDb);
         OfferServiceImpl offerService = new OfferServiceImpl(dbManager);
 
         //Instantiate server and init routes

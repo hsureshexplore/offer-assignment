@@ -1,7 +1,5 @@
 package com.worldpay.exercise;
 
-import com.worldpay.exercise.app.OfferServiceImpl;
-import com.worldpay.exercise.datasource.DBManagerImpl;
 import com.worldpay.exercise.domain.Offer;
 import io.restassured.response.Response;
 import org.hamcrest.Matchers;
@@ -33,9 +31,7 @@ public class OfferServerTest {
     @BeforeClass
     public static void setUp() {
         //Create Offer server and init routes
-        DBManagerImpl dbManager = new DBManagerImpl("./" + OfferServerTest.class.getSimpleName() + "offer.db");
-        OfferServer offerServer = new OfferServer(new OfferController(new OfferServiceImpl(dbManager)));
-        offerServer.initRoutes();
+        OfferServer offerServer = OfferServer.createServer("./" + OfferServerTest.class.getSimpleName() + "offer.db");
         url = "http://localhost:4567";
         path = "/offers";
 
