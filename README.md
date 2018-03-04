@@ -13,23 +13,23 @@ OfferServer is the entry point for the application. The application can be run b
 
 ### Create offer
 
-curl -X POST "http://localhost:4567/offers?description=aaaa&price=10.0&currency=GBP&validityInSeconds=10"
+`curl -X POST "http://localhost:4567/offers?description=aaaa&price=10.0&currency=GBP&validityInSeconds=10"`
 
 ### Get offers
 
-curl http://localhost:4567/offers
+`curl http://localhost:4567/offers`
 
 ### Get offer by Id
 
-curl localhost:4567/offers/<id>
+`curl localhost:4567/offers/<id>`
 
-Eg: curl localhost:4567/offers/56c183de-2bf5-474a-9ff7-fc2d12f103b9
+`Eg: curl localhost:4567/offers/56c183de-2bf5-474a-9ff7-fc2d12f103b9`
 
 ### Cancel offer
 
-curl -X POST localhost:4567/offers/cancel/<id>
+`curl -X POST localhost:4567/offers/cancel/<id>`
 
-Eg: curl -X POST "localhost:4567/offers/cancel/7ba3772e-2ace-4502-8112-dd2380f56900"
+`Eg: curl -X POST "localhost:4567/offers/cancel/7ba3772e-2ace-4502-8112-dd2380f56900"`
 
 ### Decisions on design
 
