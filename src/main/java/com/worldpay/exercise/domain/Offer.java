@@ -43,6 +43,12 @@ public class Offer implements Serializable{
         return new Offer(id, description, price, currency, validityInSeconds, createdAt, true);
     }
 
+    public boolean shouldExpire() {
+        LocalDateTime expiryTime = createdAt.plusSeconds(validityInSeconds);
+        LocalDateTime currentTime = LocalDateTime.now();
+        return !expiryTime.isAfter(currentTime);
+    }
+
     public String getId() {
         return id;
     }
@@ -73,12 +79,6 @@ public class Offer implements Serializable{
 
     public void cancel() {
         this.valid = false;
-    }
-
-    public boolean shouldExpire() {
-        LocalDateTime expiryTime = createdAt.plusSeconds(validityInSeconds);
-        LocalDateTime currentTime = LocalDateTime.now();
-        return !expiryTime.isAfter(currentTime);
     }
 
     @Override
