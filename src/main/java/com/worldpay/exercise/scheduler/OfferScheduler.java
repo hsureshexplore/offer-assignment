@@ -19,13 +19,12 @@ public class OfferScheduler {
         ScheduledExecutorService scheduledExecutorService =
                 Executors.newSingleThreadScheduledExecutor();
         scheduledExecutorService.scheduleAtFixedRate(this::expireOffers, 0, 1, TimeUnit.SECONDS);
-
     }
 
     private void expireOffers() {
         Collection<Offer> offers = offerService.getOffers();
         LOGGER.debug("Queried offers {}", offers.size());
-        offers.stream().filter((offer) -> (offer.isValid() && offer.shouldExpire())).forEach(offer -> {
+        offers.stream().filter(Offer::isValid).filter(Offer::shouldExpire).forEach(offer -> {
             LOGGER.info("Cancelling offer {} created at {} with validity period in seconds {}", offer.getId(), offer.getCreatedAt(), offer.getValidityInSeconds());
             offerService.cancelOffer(offer.getId());
         });

@@ -40,8 +40,7 @@ public class Offer implements Serializable{
     public static Offer create(final String description, final BigDecimal price, final String currency, final int validityInSeconds) {
         String id = UUID.randomUUID().toString();
         LocalDateTime createdAt =  LocalDateTime.now();
-        boolean valid = true;
-        return new Offer(id, description, price, currency, validityInSeconds, createdAt, valid);
+        return new Offer(id, description, price, currency, validityInSeconds, createdAt, true);
     }
 
     public String getId() {

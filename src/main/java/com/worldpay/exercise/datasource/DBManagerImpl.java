@@ -32,7 +32,7 @@ public class DBManagerImpl implements DBManager {
                 .transactionEnable()
                 .closeOnJvmShutdown()
                 .fileDeleteAfterClose()
-                .make().<String, Offer>hashMap(OFFER, Serializer.STRING, new OfferSerializer()).createOrOpen();
+                .make().hashMap(OFFER, Serializer.STRING, new OfferSerializer()).createOrOpen();
     }
 
     @VisibleForTesting
@@ -59,7 +59,7 @@ public class DBManagerImpl implements DBManager {
     @Override
     public Offer cancelOffer(String id) {
         Offer offer = map.get(id);
-        LOGGER.info("Cancelling offer in DBManager {}", offer.getId());
+        LOGGER.debug("Cancelling offer in DBManager {}", offer.getId());
         offer.cancel();
         map.put(offer.getId(), offer);
         LOGGER.info("Cancelled offer added to DB {}", offer.getId());

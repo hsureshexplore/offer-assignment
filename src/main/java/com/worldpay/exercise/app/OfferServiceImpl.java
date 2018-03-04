@@ -8,12 +8,10 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Optional;
-import java.util.concurrent.atomic.AtomicLong;
 
 public class OfferServiceImpl implements OfferService {
 
     private final DBManager dbManager;
-    private AtomicLong offerIdCounter = new AtomicLong();
 
     public OfferServiceImpl(DBManager dbManager) {
         this.dbManager = dbManager;

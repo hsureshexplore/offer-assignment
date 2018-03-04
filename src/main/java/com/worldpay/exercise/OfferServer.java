@@ -12,7 +12,6 @@ import static spark.Spark.*;
 
 /***
  * Entry point for the application.
- * In real application all the bean wiring and lifecycle operations will be done in a DI framework like Spring, Guice, Play framework
  */
 public class OfferServer {
 
@@ -23,14 +22,25 @@ public class OfferServer {
     }
 
     public static void main(String[] args) {
+        createOfferServer();
+    }
+
+    /**
+     * In real application all the bean wiring and lifecycle operations will be done in a DI framework like Spring,
+     * Guice, Play framework
+     * @return an instance of offer server
+     */
+    public static OfferServer createOfferServer() {
         DBManager dbManager = new DBManagerImpl();
         OfferServiceImpl offerService = new OfferServiceImpl(dbManager);
 
         //Instantiate server and init routes
-        new OfferServer(new OfferController(offerService)).initRoutes();
+        OfferServer offerServer = new OfferServer(new OfferController(offerService));
+        offerServer.initRoutes();
 
         //Scheduler instantiated
         new OfferScheduler(offerService);
+        return offerServer;
     }
 
     public void initRoutes() {
