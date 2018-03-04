@@ -106,6 +106,13 @@ public class OfferServerTest {
                 statusCode(is(400)).
                 body("message", Matchers.startsWith("Validity period should be greater than 0"));
 
+        given().
+                when().
+                get(url + path + "/invalid" ).
+                then().
+                statusCode(is(404)).
+                body("message", Matchers.startsWith("No offer found for id [invalid]"));
+
     }
     @Test
     public void testGetOffersReturnsListOfOffers() {

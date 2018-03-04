@@ -3,6 +3,7 @@ package com.worldpay.exercise;
 import com.worldpay.exercise.app.OfferServiceImpl;
 import com.worldpay.exercise.datasource.DBManager;
 import com.worldpay.exercise.datasource.DBManagerImpl;
+import com.worldpay.exercise.exception.ServiceException;
 import com.worldpay.exercise.response.JsonUtil;
 import com.worldpay.exercise.response.ResponseError;
 import com.worldpay.exercise.scheduler.OfferScheduler;
@@ -43,8 +44,16 @@ public class OfferServer {
         get("/offers/:id", (req, res) -> offerController.getOffer(req), JsonUtil::toJson);
         post("/offers/cancel/:id", (req, res) -> offerController.cancelOffer(req), JsonUtil::toJson);
 
-        exception(IllegalArgumentException.class, (e, req, res) -> {
-            res.status(400);
+        exception(Exception.class, (e, req, res) -> {
+
+            int statusCode = 500;
+            if (e instanceof IllegalArgumentException) {
+                statusCode = 400;
+            }
+            else if (e instanceof ServiceException) {
+                statusCode = 404;
+            }
+            res.status(statusCode);
             res.body(JsonUtil.toJson(new ResponseError(e)));
         });
     }

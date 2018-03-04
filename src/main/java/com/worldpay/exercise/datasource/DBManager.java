@@ -3,6 +3,7 @@ package com.worldpay.exercise.datasource;
 import com.worldpay.exercise.domain.Offer;
 
 import java.util.Collection;
+import java.util.Optional;
 
 
 public interface DBManager {
@@ -10,7 +11,7 @@ public interface DBManager {
 
     Collection<Offer> getOffers();
 
-    Offer getOffer(String id);
+    Optional<Offer> getOffer(String id);
 
     Offer cancelOffer(String id);
 }

@@ -2,10 +2,12 @@ package com.worldpay.exercise.app;
 
 import com.worldpay.exercise.datasource.DBManager;
 import com.worldpay.exercise.domain.Offer;
+import com.worldpay.exercise.exception.ServiceException;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Optional;
 import java.util.concurrent.atomic.AtomicLong;
 
 public class OfferServiceImpl implements OfferService {
@@ -31,11 +33,15 @@ public class OfferServiceImpl implements OfferService {
 
     @Override
     public Offer getOffer(String id) {
-        return dbManager.getOffer(id);
+        Optional<Offer> offer = dbManager.getOffer(id);
+        offer.orElseThrow(() -> new ServiceException("No offer found for id [" + id + "]", 404));
+        return offer.get();
     }
 
     @Override
     public Offer cancelOffer(String id) {
+        Optional<Offer> offer = dbManager.getOffer(id);
+        offer.orElseThrow(() -> new ServiceException("Unable to cancel offer. No offer found for id [" + id + "]", 404));
         return dbManager.cancelOffer(id);
     }
 }

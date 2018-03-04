@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 
 import java.util.Collection;
 import java.util.Map;
+import java.util.Optional;
 
 /***
  * Embedded database engine for storing offers.
@@ -51,13 +52,13 @@ public class DBManagerImpl implements DBManager {
     }
 
     @Override
-    public Offer getOffer(String id) {
-        return map.get(id);
+    public Optional<Offer> getOffer(String id) {
+        return map.get(id) != null ? Optional.of(map.get(id)) : Optional.empty();
     }
 
     @Override
     public Offer cancelOffer(String id) {
-        Offer offer = getOffer(id);
+        Offer offer = map.get(id);
         LOGGER.info("Cancelling offer in DBManager {}", offer.getId());
         offer.cancel();
         map.put(offer.getId(), offer);

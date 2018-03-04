@@ -5,6 +5,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.math.BigDecimal;
+import java.util.Optional;
 
 import static org.junit.Assert.*;
 
@@ -24,8 +25,8 @@ public class DBManagerTest {
     public void testOfferCanBeAddedAndFetchedCorrectly() {
         Offer offer = Offer.create("offer description", new BigDecimal(10.45), "GBP", 2000);
         dbManager.addOffer(offer);
-        Offer fetchedOffer = dbManager.getOffer(offer.getId());
-        assertEquals(offer, fetchedOffer);
+        Optional<Offer> fetchedOffer = dbManager.getOffer(offer.getId());
+        assertEquals(offer, fetchedOffer.get());
     }
 
     @Test
@@ -43,6 +44,6 @@ public class DBManagerTest {
         Offer offer3 = Offer.create("offer3", new BigDecimal(10.45), "GBP", 2000);
         dbManager.addOffer(offer3);
         dbManager.cancelOffer(offer3.getId());
-        assertFalse(dbManager.getOffer(offer3.getId()).isValid());
+        assertFalse(dbManager.getOffer(offer3.getId()).get().isValid());
     }
 }
