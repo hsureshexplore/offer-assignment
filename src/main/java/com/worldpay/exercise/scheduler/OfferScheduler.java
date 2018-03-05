@@ -11,6 +11,8 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 public class OfferScheduler {
+    public static final int PERIOD = 1;
+    public static final int INITIAL_DELAY = 0;
     private OfferService offerService;
     private Logger LOGGER = LoggerFactory.getLogger(OfferScheduler.class);
 
@@ -18,7 +20,7 @@ public class OfferScheduler {
         this.offerService = offerService;
         ScheduledExecutorService scheduledExecutorService =
                 Executors.newSingleThreadScheduledExecutor();
-        scheduledExecutorService.scheduleAtFixedRate(this::expireOffers, 0, 1, TimeUnit.SECONDS);
+        scheduledExecutorService.scheduleAtFixedRate(this::expireOffers, INITIAL_DELAY, PERIOD, TimeUnit.SECONDS);
     }
 
     private void expireOffers() {
