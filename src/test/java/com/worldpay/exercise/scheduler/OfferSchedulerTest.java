@@ -8,38 +8,47 @@ import com.worldpay.exercise.domain.Offer;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.math.BigDecimal;
 import java.util.concurrent.ConcurrentHashMap;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.*;
 
 
 public class OfferSchedulerTest {
 
     private DBManager dbManager;
+    private  ManualClock clock = new ManualClock();
+    private OfferScheduler offerScheduler;
 
     @Before
     public void before() {
 
         dbManager = new DBManagerImpl(new ConcurrentHashMap<>());
         OfferService offerService = new OfferServiceImpl(dbManager);
-        new OfferScheduler(offerService);
+        offerScheduler = new OfferScheduler(offerService, clock);
     }
 
     @Test
     public void testOfferExpiry() throws InterruptedException {
         //setup
-        Offer offer1 = Offer.create("Offer description 1", BigDecimal.TEN, "GBP", 1);
-        Offer offer2 = Offer.create("Offer description 2", BigDecimal.TEN, "GBP", Integer.MAX_VALUE);
+        Offer offer1 = mockOffer("offer1", true, true);
+        Offer offer2 = mockOffer("offer2", true, false);
         dbManager.addOffer(offer1);
         dbManager.addOffer(offer2);
 
         //act
-        Thread.sleep(3000);
+        offerScheduler.start();
+        clock.elapseTime();
 
         //assert
-        assertFalse(offer1.isValid());
-        assertTrue(offer2.isValid());
+        verify(offer1).cancel();
+        verify(offer2, never()).cancel();
+    }
+
+    private Offer mockOffer(String id, boolean valid, boolean expire) {
+        Offer offer = mock(Offer.class);
+        when(offer.getId()).thenReturn(id);
+        when(offer.isValid()).thenReturn(valid);
+        when(offer.shouldExpire()).thenReturn(expire);
+        return offer;
     }
 }

@@ -6,7 +6,11 @@ import com.worldpay.exercise.datasource.DBManagerImpl;
 import com.worldpay.exercise.exception.ServiceException;
 import com.worldpay.exercise.response.JsonUtil;
 import com.worldpay.exercise.response.ResponseError;
+import com.worldpay.exercise.scheduler.Clock;
 import com.worldpay.exercise.scheduler.OfferScheduler;
+import com.worldpay.exercise.scheduler.RealClock;
+
+import java.util.concurrent.TimeUnit;
 
 import static spark.Spark.*;
 
@@ -44,7 +48,9 @@ public class OfferServer {
         offerServer.initRoutes();
 
         //Scheduler instantiated
-        new OfferScheduler(offerService);
+        Clock clock = new RealClock(1, TimeUnit.SECONDS);
+        new OfferScheduler(offerService, clock);
+        clock.start();
         return offerServer;
     }
 

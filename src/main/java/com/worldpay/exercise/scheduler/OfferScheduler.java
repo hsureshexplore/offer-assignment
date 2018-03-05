@@ -6,21 +6,18 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Collection;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
 
 public class OfferScheduler {
     public static final int PERIOD = 1;
     public static final int INITIAL_DELAY = 0;
     private OfferService offerService;
     private Logger LOGGER = LoggerFactory.getLogger(OfferScheduler.class);
+    private final Clock clock;
 
-    public OfferScheduler(OfferService offerService){
+    public OfferScheduler(OfferService offerService, Clock clock){
+        this.clock = clock;
         this.offerService = offerService;
-        ScheduledExecutorService scheduledExecutorService =
-                Executors.newSingleThreadScheduledExecutor();
-        scheduledExecutorService.scheduleAtFixedRate(this::expireOffers, INITIAL_DELAY, PERIOD, TimeUnit.SECONDS);
+        clock.register(this::expireOffers);
     }
 
     private void expireOffers() {
@@ -30,5 +27,13 @@ public class OfferScheduler {
             LOGGER.info("Cancelling offer {} created at {} with validity period in seconds {}", offer.getId(), offer.getCreatedAt(), offer.getValidityInSeconds());
             offerService.cancelOffer(offer.getId());
         });
+    }
+
+    public void start() {
+        clock.start();
+    }
+
+    public void stop() {
+        clock.stop();
     }
 }
